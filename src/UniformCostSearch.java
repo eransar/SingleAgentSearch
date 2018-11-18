@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -26,8 +27,33 @@ public class UniformCostSearch   extends ASearch
 	@Override
 	public void initLists() 
 	{
-		openList = new PriorityQueue<>();
-		closeList = new PriorityQueue<>();
+
+		openList = new PriorityQueue<ASearchNode>( new Comparator<ASearchNode>() {
+				public int compare(ASearchNode n1, ASearchNode n2) {
+					// compare n1 and n2
+					if(n1.getG() > n2.getG()){
+						return 1;
+					}
+					else if(n1.getG()==n2.getG()){
+						return 0;
+					}
+					else{
+						return -1;
+					}
+				}});
+		closeList = new PriorityQueue<ASearchNode>( new Comparator<ASearchNode>() {
+			public int compare(ASearchNode n1, ASearchNode n2) {
+				// compare n1 and n2
+				if(n1.getG() > n2.getG()){
+					return 1;
+				}
+				else if(n1.getG()==n2.getG()){
+					return 0;
+				}
+				else{
+					return -1;
+				}
+			}});
 	}
 
 	@Override
