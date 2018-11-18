@@ -1,7 +1,11 @@
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class BreadthFirstSearch  extends ASearch
 {
 	// Define lists here ...
+	Queue<ASearchNode> openList;
+	Queue<ASearchNode> closeList;
 	
 	@Override
 	public String getSolverName() 
@@ -22,7 +26,8 @@ public class BreadthFirstSearch  extends ASearch
 	@Override
 	public void initLists() 
 	{
-
+		openList = new LinkedList<>();
+		closeList = new LinkedList<>();
 	}
 
 	@Override
@@ -31,6 +36,8 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
+		if(openList.contains(node))
+			return node;
 		return null;
 	}
 
@@ -40,6 +47,8 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
+		if(openList.contains(node))
+			return true;
 		return false;
 	}
 	
@@ -49,6 +58,8 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
+		if(closeList.contains(node))
+			return true;
 		return false;
 	}
 
@@ -58,7 +69,7 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
-		
+		openList.add(node);
 	}
 
 	@Override
@@ -67,19 +78,20 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
- 
+ 		closeList.add(node);
 	}
 
 	@Override
 	public int openSize() 
 	{
-		return 0;
+
+		return openList.size();
 	}
 
 	@Override
 	public ASearchNode getBest() 
 	{
-		return null;
+		return openList.remove();
 	}
 
 	
