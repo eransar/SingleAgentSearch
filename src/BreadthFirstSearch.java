@@ -36,8 +36,12 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
-		if(openList.contains(node))
-			return node;
+		for (ASearchNode node1 : openList)
+		{
+			if(node.equals(node1)){
+				return node1;
+			}
+		}
 		return null;
 	}
 
