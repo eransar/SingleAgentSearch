@@ -1,6 +1,10 @@
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class AStarSearch   extends ASearch
 {
+	PriorityQueue<HeuristicSearchNode> open;
+	PriorityQueue<HeuristicSearchNode> close;
 	// Define lists here ...
 	
 	@Override
@@ -22,7 +26,32 @@ public class AStarSearch   extends ASearch
 	@Override
 	public void initLists() 
 	{
-		
+		open = new PriorityQueue<HeuristicSearchNode>( new Comparator<ASearchNode>() {
+			public int compare(ASearchNode n1, ASearchNode n2) {
+				// compare n1 and n2
+				if(n1.getF() > n2.getF()){
+					return 1;
+				}
+				else if(n1.getF()==n2.getF()){
+					return 0;
+				}
+				else{
+					return -1;
+				}
+			}});
+		close = new PriorityQueue<HeuristicSearchNode>( new Comparator<ASearchNode>() {
+			public int compare(ASearchNode n1, ASearchNode n2) {
+				// compare n1 and n2
+				if(n1.getF() > n2.getF()){
+					return 1;
+				}
+				else if(n1.getF()==n2.getF()){
+					return 0;
+				}
+				else{
+					return -1;
+				}
+			}});
 	}
 
 	@Override
@@ -31,6 +60,8 @@ public class AStarSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
+		if(open.contains( node))
+			return node;
 		return null;
 	}
 
@@ -40,6 +71,8 @@ public class AStarSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
+		if (open.contains(node))
+			return true;
 		return false;
 	}
 	
@@ -49,6 +82,8 @@ public class AStarSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
+		if (close.contains(node))
+		return true;
 		return false;
 	}
 
@@ -58,7 +93,7 @@ public class AStarSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
-
+		open.add((HeuristicSearchNode)node);
 	}
 
 	@Override
@@ -67,19 +102,20 @@ public class AStarSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
-		
+		close.add((HeuristicSearchNode)node);
 	}
 
 	@Override
 	public int openSize() 
 	{
-		return 0;
+		return open.size();
 	}
 
 	@Override
 	public ASearchNode getBest() 
 	{
-		return null;
+		return open.remove();
+
 	}
 
 }
