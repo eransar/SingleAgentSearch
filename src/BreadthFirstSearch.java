@@ -1,3 +1,4 @@
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -26,8 +27,8 @@ public class BreadthFirstSearch  extends ASearch
 	@Override
 	public void initLists() 
 	{
-		openList = new LinkedList<>();
-		closeList = new LinkedList<>();
+		openList = new ArrayDeque<>();
+		closeList = new ArrayDeque<>();
 	}
 
 	@Override
@@ -36,8 +37,12 @@ public class BreadthFirstSearch  extends ASearch
 		ASearchNode node
 	) 
 	{
-		if(openList.contains(node))
-			return node;
+		for (ASearchNode node1 : openList)
+		{
+			if(node.equals(node1)){
+				return node1;
+			}
+		}
 		return null;
 	}
 

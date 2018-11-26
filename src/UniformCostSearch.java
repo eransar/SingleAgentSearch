@@ -1,12 +1,10 @@
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class UniformCostSearch   extends ASearch
 {
 	// Define lists here ...
 	PriorityQueue<ASearchNode> openList;
-	PriorityQueue<ASearchNode> closeList;
+	Queue<ASearchNode> closeList;
 
 	@Override
 	public String getSolverName() 
@@ -41,19 +39,7 @@ public class UniformCostSearch   extends ASearch
 						return -1;
 					}
 				}});
-		closeList = new PriorityQueue<ASearchNode>( new Comparator<ASearchNode>() {
-			public int compare(ASearchNode n1, ASearchNode n2) {
-				// compare n1 and n2
-				if(n1.getG() > n2.getG()){
-					return 1;
-				}
-				else if(n1.getG()==n2.getG()){
-					return 0;
-				}
-				else{
-					return -1;
-				}
-			}});
+		closeList = new ArrayDeque<>();
 	}
 
 	@Override
@@ -62,8 +48,12 @@ public class UniformCostSearch   extends ASearch
 		ASearchNode node
 	) 
 	{
-		if(openList.contains(node))
-			return node;
+			for (ASearchNode node1 : openList)
+			{
+				if(node.equals(node1)){
+					return node1;
+				}
+			}
 		return null;
 	}
 
